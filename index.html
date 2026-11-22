@@ -133,6 +133,22 @@ section+section{margin-top:34px}
 .slotrow b{font-family:var(--f-mono);font-size:12px}
 .slotrow span{color:var(--dim)}
 
+/* STAGE FLOW (CODM / FF / BGMI) */
+.flow{position:relative;display:grid;grid-template-columns:repeat(var(--n),minmax(175px,1fr));column-gap:44px;min-width:calc(var(--n) * 215px)}
+.flow .wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:0}
+.flow .wires path{fill:none;stroke:var(--wire);stroke-width:2}
+.fcol{position:relative;z-index:1;display:flex;flex-direction:column;min-width:0}
+.fnodes{flex:1;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.fn{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);padding:7px 10px;min-width:0}
+.fn .k{font-weight:700;font-size:14px;line-height:1.25}
+.fn .v{font-size:12.5px;color:var(--dim);line-height:1.3}
+.fn .s{font-family:var(--f-mono);font-size:10.5px;color:var(--accent);margin-top:3px;text-transform:uppercase}
+.fn.big{padding:12px 12px}
+.fn.big .k{font-family:var(--f-display);font-size:30px;font-weight:600;line-height:1;text-transform:uppercase}
+.fn.win{border-color:var(--gold);background:linear-gradient(160deg,rgba(255,209,102,.14),var(--panel))}
+.fn.win .s{color:var(--gold)}
+.flow-note{color:var(--dim);font-size:13px;margin:10px 0 0}
+
 /* CODM */
 .p-codm{--accent:var(--codm)}
 .modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
@@ -345,6 +361,11 @@ footer.foot{border-top:1px solid var(--line);padding-block:20px 40px;color:var(-
     <div class="groups7" id="codmgroups"></div>
   </section>
   <section>
+    <div class="sh"><span class="eyebrow">Road to the arena</span><h3>Progression</h3></div>
+    <div class="bracket-scroll"><div id="flow-codm"></div></div>
+    <p class="flow-note">Knockout pairings for 27–29 Nov will be announced after the group stage.</p>
+  </section>
+  <section>
     <div class="sh"><span class="eyebrow">Wave & lobby sheet</span><h3>Deployment waves</h3></div>
     <div class="waves" id="waves"></div>
   </section>
@@ -395,13 +416,8 @@ footer.foot{border-top:1px solid var(--line);padding-block:20px 40px;color:var(-
   <section id="ffdays"></section>
   <section>
     <div class="sh"><span class="eyebrow">Road to champion</span><h3>Progression</h3></div>
-    <div class="funnel">
-      <div class="fstep"><b class="tnum">127</b><span class="eyebrow">Online qualifiers</span><p>23–25 Nov, 11 groups. Day 1 top 5 per group; Days 2–3 top 4.</p></div>
-      <div class="fstep"><b class="tnum">48</b><span class="eyebrow">Semifinal pool</span><p>20 + 16 + 12 direct qualifiers. Seed draw on 26 Nov.</p></div>
-      <div class="fstep"><b class="tnum">4×12</b><span class="eyebrow">LAN semifinals</span><p>SST offline. 4 groups, 3 BR matches each, top 3 advance.</p></div>
-      <div class="fstep"><b class="tnum">12</b><span class="eyebrow">Grand finals</span><p>1 lobby, 6 BR matches (2× map rotation).</p></div>
-      <div class="fstep win"><b>1st</b><span class="eyebrow">Champion</span><p>Podium: Champion, 1st runner-up, 2nd runner-up.</p></div>
-    </div>
+    <div class="bracket-scroll"><div id="flow-ff"></div></div>
+    <p class="flow-note">Direct qualification to the LAN stage. No wildcard or last-chance qualifier.</p>
   </section>
   <section>
     <div class="rules">
@@ -421,12 +437,9 @@ footer.foot{border-top:1px solid var(--line);padding-block:20px 40px;color:var(-
     <div class="chips"><span class="chip hot">Mobile only · no iPads</span><span class="chip">Session 8:30 PM–12 AM</span><span class="chip">3 matches / night</span></div>
   </div>
   <section>
-    <div class="stages">
-      <div class="stage"><span class="eyebrow">Mon 23 Nov · Qualifier Day 1</span><h4>Groups A &amp; B</h4><p>32 teams play 3 matches in parallel lobbies.</p></div>
-      <div class="stage"><span class="eyebrow">Tue 24 Nov · Qualifier Day 2</span><h4>Groups C &amp; D</h4><p>32 teams play 3 matches. Top 32 overall advance.</p></div>
-      <div class="stage"><span class="eyebrow">Wed 25 Nov · Semi-finals</span><h4>Top 32</h4><p>Each group plays 3 matches. Top 16 advance to the finals.</p></div>
-      <div class="stage final"><span class="eyebrow">Sat 28 Nov · 12–4 PM</span><h4>Grand Finals</h4><p>Top 16 on Scaler campus. 1 lobby, 4 matches.</p></div>
-    </div>
+    <div class="sh"><span class="eyebrow">Road to champion</span><h3>Progression</h3></div>
+    <div class="bracket-scroll"><div id="flow-bgmi"></div></div>
+    <p class="flow-note">Ranking is by cumulative points across every match in your group, not head-to-head results.</p>
   </section>
   <section>
     <div class="sh"><span class="eyebrow">Same every night · Mon, Tue, Wed</span><h3>Map rotation</h3></div>
@@ -569,6 +582,65 @@ $("#ffpts").style.gridTemplateColumns="repeat(5,minmax(0,1fr))";
 $("#bgmigroups").innerHTML=Object.entries(BG).map(([g,ts])=>`<div class="bg" id="bg-${g}"><header><h5>Group ${g}</h5><small>${"AB".includes(g)?"MON 23 NOV":"TUE 24 NOV"} · ${ts.length}</small></header><ol>${ts.map(([t,l])=>`<li><div><b>${esc(t)}</b><small>${esc(l)}</small></div></li>`).join("")}</ol></div>`).join("");
 $("#bgpts").innerHTML=[["1st",10],["2nd",6],["3rd",5],["4th",4],["5th",3],["6th",2],["7–10th",1],["Kill",1]].map(([p,n])=>`<div><b>${n}</b><small>${p}</small></div>`).join("");
 
+/* ---------- STAGE FLOWS ---------- */
+// cols: [{h,d,n:[{id,k,v,s,c}]}], edges: [[fromId,toId]]. Wires are drawn in SVG from measured node positions.
+const FLOWS=[];
+function flow(sel,cols,edges){
+ const host=$(sel);
+ host.innerHTML=`<div class="flow" style="--n:${cols.length}"><svg class="wires" aria-hidden="true"></svg>${
+  cols.map(c=>`<div class="fcol"><div class="colhead">${c.h}<small>${c.d}</small></div><div class="fnodes">${
+   c.n.map(x=>`<div class="fn ${x.c||""}" id="${x.id}"><div class="k">${esc(x.k)}</div>${x.v?`<div class="v">${esc(x.v)}</div>`:""}${x.s?`<div class="s">${esc(x.s)}</div>`:""}</div>`).join("")}</div></div>`).join("")}</div>`;
+ const f=host.firstElementChild;FLOWS.push({f,edges});
+ if("ResizeObserver" in window)new ResizeObserver(()=>wire(f,edges)).observe(f);
+}
+function wire(f,edges){
+ const svg=f.querySelector(".wires"),R=f.getBoundingClientRect();
+ if(!R.width)return;
+ svg.setAttribute("viewBox",`0 0 ${R.width} ${R.height}`);
+ svg.innerHTML=edges.map(([a,b])=>{
+  const A=document.getElementById(a).getBoundingClientRect(),B=document.getElementById(b).getBoundingClientRect();
+  const x1=A.right-R.left,y1=A.top+A.height/2-R.top,x2=B.left-R.left,y2=B.top+B.height/2-R.top,xm=(x1+x2)/2;
+  return `<path d="M${x1} ${y1}H${xm}V${y2}H${x2}"/>`;}).join("");
+}
+const redraw=()=>FLOWS.forEach(x=>wire(x.f,x.edges));
+document.fonts&&document.fonts.ready.then(redraw);
+window.addEventListener("resize",redraw);
+
+// Free Fire
+(()=>{
+ const g=[],e=[];
+ FF_DAYS.forEach((D,di)=>[...D.g].forEach(k=>{g.push({id:"fx-"+k,k:"Group "+k,v:`${FF[k].length} teams · top ${D.top}`,s:D.d.split(" · ")[1]});e.push(["fx-"+k,"fx-d"+(di+1)])}));
+ const coh=[["fx-d1","Day 1 cohort","20 qualifiers","Groups A–D"],["fx-d2","Day 2 cohort","16 qualifiers","Groups E–H"],["fx-d3","Day 3 cohort","12 qualifiers","Groups I–K"]].map(([id,k,v,s])=>({id,k,v,s}));
+ coh.forEach(c=>e.push([c.id,"fx-seed"]));
+ const sf=[1,2,3,4].map(i=>({id:"fx-sf"+i,k:"SF Group "+i,v:"12 teams · 3 matches",s:"Top 3 advance"}));
+ sf.forEach(s=>{e.push(["fx-seed",s.id]);e.push([s.id,"fx-gf"])});
+ const pod=[["fx-p1","Champion","LAN winner"],["fx-p2","2nd place","1st runner-up"],["fx-p3","3rd place","2nd runner-up"]].map(([id,k,v])=>({id,k,v,c:"win"}));
+ pod.forEach(p=>e.push(["fx-gf",p.id]));
+ flow("#flow-ff",[
+  {h:"Qualifiers",d:"23–25 NOV",n:g},
+  {h:"Semi pool",d:"48 TEAMS",n:coh},
+  {h:"Seed draw",d:"26 NOV",n:[{id:"fx-seed",k:"48",v:"Seeded into 4 semifinal groups",s:"Briefing 9 PM",c:"big"}]},
+  {h:"LAN semis",d:"SST OFFLINE",n:sf},
+  {h:"Grand final",d:"12 TEAMS",n:[{id:"fx-gf",k:"12",v:"1 lobby · 6 matches",s:"2× map rotation",c:"big"}]},
+  {h:"Podium",d:"",n:pod}],e);
+})();
+
+// BGMI
+flow("#flow-bgmi",[
+ {h:"Qualifiers",d:"23–24 NOV",n:"ABCD".split("").map(k=>({id:"bx-"+k,k:"Group "+k,v:"16 teams · 3 matches",s:"AB".includes(k)?"Mon 23 Nov":"Tue 24 Nov"}))},
+ {h:"Semi-finals",d:"WED 25 NOV",n:[{id:"bx-sf",k:"Top 32",v:"3 matches · Rondo, Erangel, Miramar",s:"8:30 PM–12 AM",c:"big"}]},
+ {h:"Grand finals",d:"SAT 28 NOV",n:[{id:"bx-gf",k:"Top 16",v:"1 lobby · 4 matches · Scaler campus",s:"12–4 PM",c:"big"}]},
+ {h:"Champion",d:"",n:[{id:"bx-ch",k:"BGMI Champion",v:"Winner TBD",c:"win"}]}],
+ [..."ABCD"].map(k=>["bx-"+k,"bx-sf"]).concat([["bx-sf","bx-gf"],["bx-gf","bx-ch"]]));
+
+// CODM
+flow("#flow-codm",[
+ {h:"Group stage",d:"23–25 NOV",n:Object.entries(CODM_GROUPS).map(([k,t])=>({id:"cx-"+k,k:"Group "+k,v:`${t.length} teams · round robin`,s:"HP · DOM · S&D"}))},
+ {h:"Qualify",d:"8 SPOTS",n:[{id:"cx-w",k:"7 group winners",v:"1 from each group",s:"Direct"},{id:"cx-r",k:"Best runner-up",v:"1 across all 7 groups",s:"Best record"}]},
+ {h:"Offline knockout",d:"27–29 NOV",n:[{id:"cx-k",k:"Top 8",v:"Knockout · pairings TBA",s:"Yugaantar Gaming Arena",c:"big"}]},
+ {h:"Champion",d:"",n:[{id:"cx-c",k:"CODM Champion",v:"Winner TBD",c:"win"}]}],
+ Object.keys(CODM_GROUPS).flatMap(k=>[["cx-"+k,"cx-w"],["cx-"+k,"cx-r"]]).concat([["cx-w","cx-k"],["cx-r","cx-k"],["cx-k","cx-c"]]));
+
 /* ---------- TEAM INDEX ---------- */
 const IDX=[];
 VAL_R32.forEach(([a,b,d,t],i)=>{const id="R32-"+pad(i+1);
@@ -602,6 +674,7 @@ function show(t,push=true){
  TABS.forEach(k=>{$("#p-"+k).hidden=k!==t});
  document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected",b.dataset.t===t));
  if(push&&location.hash!=="#"+t)history.replaceState(null,"","#"+t);
+ requestAnimationFrame(redraw);
 }
 $("#tabs").addEventListener("click",e=>{const b=e.target.closest(".tab");if(!b)return;show(b.dataset.t);
  const tb=document.querySelector(".tabbar");if(tb.getBoundingClientRect().top<=1)window.scrollTo({top:tb.offsetTop,behavior:"smooth"});});
