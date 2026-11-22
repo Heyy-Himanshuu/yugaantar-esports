@@ -1,0 +1,385 @@
+{
+ "updated": null,
+ "valorant": {
+  "r32": [
+   ["NoFrags", "0 UTIL"],
+   ["SasteSentinels", "Connectors"],
+   ["The Mentalist", "Plant the Damn Spike"],
+   ["Larpers", "Team Sabzi"],
+   ["Shikaripalya", "Bacardi"],
+   ["Dhandewale", "Slackers"],
+   ["Team CC", "Team Sanity"],
+   ["Genesis Guild", "PAAJI WARRIORS"],
+   ["Scaler's Last Hope", "Kati Patang"],
+   ["Kid Slayers", "TEAM JAIN OFFICIAL"],
+   ["5GUYS1SPIKE", "RogueOps"],
+   ["HEXFLARE", "Valor Vibe"],
+   ["Team Omega", "Chaos Theory"],
+   ["Novena", "SoulSyndicate"],
+   ["Immortal Blood", "Viper Squad"],
+   ["PlasticX", "DreamChasers"]
+  ],
+  "results": {
+   "R32-01": {"winner": null, "score": ""},
+   "R32-02": {"winner": null, "score": ""},
+   "R32-03": {"winner": null, "score": ""},
+   "R32-04": {"winner": null, "score": ""},
+   "R32-05": {"winner": null, "score": ""},
+   "R32-06": {"winner": null, "score": ""},
+   "R32-07": {"winner": null, "score": ""},
+   "R32-08": {"winner": null, "score": ""},
+   "R32-09": {"winner": null, "score": ""},
+   "R32-10": {"winner": null, "score": ""},
+   "R32-11": {"winner": null, "score": ""},
+   "R32-12": {"winner": null, "score": ""},
+   "R32-13": {"winner": null, "score": ""},
+   "R32-14": {"winner": null, "score": ""},
+   "R32-15": {"winner": null, "score": ""},
+   "R32-16": {"winner": null, "score": ""},
+   "R16-01": {"winner": null, "score": ""},
+   "R16-02": {"winner": null, "score": ""},
+   "R16-03": {"winner": null, "score": ""},
+   "R16-04": {"winner": null, "score": ""},
+   "R16-05": {"winner": null, "score": ""},
+   "R16-06": {"winner": null, "score": ""},
+   "R16-07": {"winner": null, "score": ""},
+   "R16-08": {"winner": null, "score": ""},
+   "R8-01": {"winner": null, "score": ""},
+   "R8-02": {"winner": null, "score": ""},
+   "R8-03": {"winner": null, "score": ""},
+   "R8-04": {"winner": null, "score": ""}
+  }
+ },
+ "codm": {
+  "groups": {
+   "A": [
+    {"name": "LIQUID", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "Nuclear", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "Barrel House", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "ThaiyirSaadham", "p": 0, "w": 0, "l": 0, "pts": 0}
+   ],
+   "B": [
+    {"name": "J²DYS", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "Team Zero", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "Blitz Raiders", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "TF141", "p": 0, "w": 0, "l": 0, "pts": 0}
+   ],
+   "C": [
+    {"name": "Team Lost", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "EDGE", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "Team Crackillusion", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "Kid Slayers", "p": 0, "w": 0, "l": 0, "pts": 0}
+   ],
+   "D": [
+    {"name": "Offset", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "Darkhold", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "Sapne Suhane...", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "Bawts", "p": 0, "w": 0, "l": 0, "pts": 0}
+   ],
+   "E": [
+    {"name": "Freakuency", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "beAtBreAkers@!", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "Money_follows", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "Gobi Ke Parathe", "p": 0, "w": 0, "l": 0, "pts": 0}
+   ],
+   "F": [
+    {"name": "THE COMRADES", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "Free Kills", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "$500", "p": 0, "w": 0, "l": 0, "pts": 0}
+   ],
+   "G": [
+    {"name": "Last Warning", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "Smoke", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "cod vinashak", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "Clutch crew", "p": 0, "w": 0, "l": 0, "pts": 0},
+    {"name": "RVCE", "p": 0, "w": 0, "l": 0, "pts": 0}
+   ]
+  }
+ },
+ "freefire": {
+  "groups": {
+   "A": {
+    "day": "Mon 23 Nov",
+    "top": 5,
+    "teams": [
+     {"name": "ACE eSports", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Gladiator eSports", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "BLACK MATRIX", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "TOXIC EMPIRE", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Tuppa Khali", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Numerical Players", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "CRACKILLUSION", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Dolakpur", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "One tap union", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "IDENTITY", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "NM ESPORTS", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Hunter pandu", "booyah": 0, "place": 0, "kills": 0}
+    ]
+   },
+   "B": {
+    "day": "Mon 23 Nov",
+    "top": 5,
+    "teams": [
+     {"name": "SCARLETDOOM", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Team Elite", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Crimson Conquerors", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "TEAM MARVEL", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "VICTUS", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Team Phoenix", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "MODi G", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "IMMORTAL ESPORTS", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "TEAM VERSATILE", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "TEAM VENOM", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "UZUMAKI", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Avengers", "booyah": 0, "place": 0, "kills": 0}
+    ]
+   },
+   "C": {
+    "day": "Mon 23 Nov",
+    "top": 5,
+    "teams": [
+     {"name": "Ultron", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Zephyrus", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "God's Rein", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Hunters", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "AKATSUKI Esports", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Dragon Ball", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Team Immortal", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "DreadLegion", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "team BST", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Not humans", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "INVINCIBLES", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "The Rulers", "booyah": 0, "place": 0, "kills": 0}
+    ]
+   },
+   "D": {
+    "day": "Mon 23 Nov",
+    "top": 5,
+    "teams": [
+     {"name": "4-play", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Team Xenon", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "SIMPLE GUYS", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "ZONEX", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "AK Legends", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Legacies", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Agaaz", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "TEAM APEX", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Sky esports", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "TEAM FENRIR", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "ARSENAL", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "DOMINATORS", "booyah": 0, "place": 0, "kills": 0}
+    ]
+   },
+   "E": {
+    "day": "Tue 24 Nov",
+    "top": 4,
+    "teams": [
+     {"name": "Galaxy Hunters", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Sin ArchBishops", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Dandupalem", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Dominater", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "IHMB KINGS", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Fantastic4", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Shadow Hawks", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Vortex", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "INFERNO", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Pehelwanpur", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "DoomBots", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "OG Brothers", "booyah": 0, "place": 0, "kills": 0}
+    ]
+   },
+   "F": {
+    "day": "Tue 24 Nov",
+    "top": 4,
+    "teams": [
+     {"name": "IMMORTAL", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Kotha", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Four star", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Team op", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "ZERO MERCY (1)", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Us gang", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Chicken Dinner", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "CPians", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Team OG", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Josephites IFA", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "TELUGU TITANS", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "team SHADOW", "booyah": 0, "place": 0, "kills": 0}
+    ]
+   },
+   "G": {
+    "day": "Tue 24 Nov",
+    "top": 4,
+    "teams": [
+     {"name": "Skull Breakers", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "BombayShavingCompany", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "SEEMA BOYS", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "FUTURE ESP", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "D.R.U.N", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "C-MAX", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "ONLY:GOD!", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Team Rushers", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Fallen titans", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "TEAM SPARK", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "NHK ESPORTS", "booyah": 0, "place": 0, "kills": 0}
+    ]
+   },
+   "H": {
+    "day": "Tue 24 Nov",
+    "top": 4,
+    "teams": [
+     {"name": "Team Powerhouse", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "_Prime✓legion_", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Team Abyss crew", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Center fresh", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Vasteguna Huiya", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Requiem", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Last Stand", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Born2Kill", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "7SWORDS", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "D GANG", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Tufferz", "booyah": 0, "place": 0, "kills": 0}
+    ]
+   },
+   "I": {
+    "day": "Wed 25 Nov",
+    "top": 4,
+    "teams": [
+     {"name": "ZERO MERCY (2)", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Troopers", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "The TyreLess Bastards", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "ALTER-EGO", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "RMA Fighters", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Satluj", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "ZeroOne", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "FRAGORA", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Titan FF", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "GodxMacro", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "FAILURES", "booyah": 0, "place": 0, "kills": 0}
+    ]
+   },
+   "J": {
+    "day": "Wed 25 Nov",
+    "top": 4,
+    "teams": [
+     {"name": "Anteiku", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Riders", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "LOSERS", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Team NaMg", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Unknown knights", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Code4Us", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Maut Ke Saudagar", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Sdc kaand", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "NO MERCY", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Team infero", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "DEATH SYNDICATE", "booyah": 0, "place": 0, "kills": 0}
+    ]
+   },
+   "K": {
+    "day": "Wed 25 Nov",
+    "top": 4,
+    "teams": [
+     {"name": "SILENT KILLER", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "X PLANETS", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "HUNTERS", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Faaahhh Esports", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "4Flukes", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "TEAM DOOM", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "All eyes on us", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "TEAM ICONIC", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Techno Blast", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "Apex dominion", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "FIREGODS", "booyah": 0, "place": 0, "kills": 0}
+    ]
+   }
+  }
+ },
+ "bgmi": {
+  "groups": {
+   "A": {
+    "day": "Mon 23 Nov",
+    "teams": [
+     {"name": "Powerpuff Boyz", "leader": "Nabi Abhishikth Zacharias", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Team DarkX", "leader": "Mahendra", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Team Edge", "leader": "Komal", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Zero Hour", "leader": "Shashank Ojha", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "RAVEN", "leader": "Harsh", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Aaja Bhid Le", "leader": "Vedish Bansal", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "TAGrealmadrid", "leader": "Anurag Singh", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Godlike", "leader": "Yogeshwaran S", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Atomic Stickers", "leader": "Alston R", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Krishna Strikers", "leader": "Pratheek Ullagaddi", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Team Rio", "leader": "Tej Kumar S", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "The Wrath", "leader": "Kushal V", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Alter Ego", "leader": "Sharan Puttu", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Teamprime", "leader": "Mahantesh", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "MAGNUM Virtue", "leader": "Vishnu Keerthan Reddy", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "DIVINE X", "leader": "Vinith Kumar", "wwcd": 0, "place": 0, "kills": 0}
+    ]
+   },
+   "B": {
+    "day": "Mon 23 Nov",
+    "teams": [
+     {"name": "Nongshim RedForce (NSR)", "leader": "Ayush Jha", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Crackillusion", "leader": "Arima Patel", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "GURKHA LEGION", "leader": "Taushif Ansari", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "TEAM-INVICTUS", "leader": "Shreyas", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Supreme 5", "leader": "Samanyu J", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "belowZero", "leader": "Haddi", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "ReignX", "leader": "Debarghya Misra", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Team Scammers", "leader": "Sagar J", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Team light", "leader": "Vikas D", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "TEAM ALPHA", "leader": "Siddiq Khan", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "VOID Esports", "leader": "Mohammed Jawad", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "TEAM BATMAN", "leader": "Phantom", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Team Francis", "leader": "Md Rayyan", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "THUNDER TALKS", "leader": "Anurag D Solanki", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Total gaming eSports", "leader": "Dhanush Reddy", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "NoScope", "leader": "Pratham Kanani", "wwcd": 0, "place": 0, "kills": 0}
+    ]
+   },
+   "C": {
+    "day": "Tue 24 Nov",
+    "teams": [
+     {"name": "Gooner Grounds", "leader": "Javin Arora", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Team Zero", "leader": "Akshat Mittal", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Team EXODUS", "leader": "Adnan Ahmed", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Gatua Gang", "leader": "Rudra Patel", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Satluj", "leader": "Vidhu Mahajan", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "DeadDrop", "leader": "Vaibhav Agrawal", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Kolaaru Gang", "leader": "Anantha Raman", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "The Mentalist", "leader": "Mehank Chopde", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "BIRIYANI POINT", "leader": "Varun", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Team Devine", "leader": "Uday Kumar", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "System.out.print(\"hello world\")", "leader": "Ritwik Rana", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "War_Machine", "leader": "Mahammed Tawseef", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "BombayShavingCompany", "leader": "Mukhesh Aravind", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "APEX", "leader": "Prajwal N", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "SEGMENT", "leader": "Rishi Nikhil", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "TEAM DSYNC", "leader": "Syed Irfan", "wwcd": 0, "place": 0, "kills": 0}
+    ]
+   },
+   "D": {
+    "day": "Tue 24 Nov",
+    "teams": [
+     {"name": "Team Avengers", "leader": "Arjun", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Gods Plan", "leader": "Pruthviraj Shinde", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Bharose wala", "leader": "Adhyan Chettri", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Team Real", "leader": "Satvik Punaini", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Akatsuki", "leader": "Patel Jahan", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "AFTERHOURS", "leader": "Rangesh Mishra", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Team-NEMESIS", "leader": "Vijay Kumar", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "♕ KRAKEN_BLAZE ♕", "leader": "Gamers Dude", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "STELLA", "leader": "Dhruv Sharma", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Team Enigma", "leader": "Rudra Kaushik", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "RoyalFlush", "leader": "Sushant Singh", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "BENGALURU RUSHERS", "leader": "Shashanth", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "The TyreLess Bastards", "leader": "Romit Raj Sahu", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "KANYARAASI", "leader": "Devi Sai Charan Maturu", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Sage", "leader": "Shivansh Singh", "wwcd": 0, "place": 0, "kills": 0},
+     {"name": "Team Baddiezzz", "leader": "Akshit K", "wwcd": 0, "place": 0, "kills": 0}
+    ]
+   }
+  }
+ }
+}
