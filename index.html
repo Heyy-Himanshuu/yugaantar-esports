@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Yugaantar Esports Pre-Rounds</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Teko:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: HUD-style lobby screen — sticky tab rail, one panel per game, each panel re-skins the accent */
+:root{
+  color-scheme:dark;
+  --bg:#0b0d12; --bg2:#11151d; --panel:#161b25; --panel2:#1d2330; --line:#2a3242;
+  --fg:#e9edf4; --dim:#8d97a8; --faint:#5b6577;
+  --val:#ff4655; --codm:#8fd14f; --ff:#ff9f1c; --bgmi:#38c8ff; --gold:#ffd166;
+  --accent:var(--val);
+  --f-display:"Teko","Bebas Neue",Impact,sans-serif;
+  --f-body:"Chakra Petch",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --cut:10px;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.45;
+  background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:32px 32px;}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;letter-spacing:.02em;text-wrap:balance;margin:0;line-height:.95;text-transform:uppercase}
+.mono{font-family:var(--f-mono)}
+.tnum{font-variant-numeric:tabular-nums}
+.cut{clip-path:polygon(0 0,calc(100% - var(--cut)) 0,100% var(--cut),100% 100%,var(--cut) 100%,0 calc(100% - var(--cut)))}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);font-weight:600}
+
+/* HERO */
+.hero{margin-top:calc(-1*env(safe-area-inset-top,0px));padding-top:calc(env(safe-area-inset-top,0px) + 2.2rem);padding-bottom:1.6rem;
+  background:radial-gradient(900px 300px at 10% 0%,rgba(255,70,85,.16),transparent 60%),radial-gradient(700px 280px at 95% 10%,rgba(56,200,255,.12),transparent 60%);border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
+.hero h1{font-size:clamp(46px,8vw,92px);font-weight:700}
+.hero h1 span{color:transparent;-webkit-text-stroke:1.5px var(--fg)}
+.hero p{color:var(--dim);margin:10px 0 0;max-width:60ch}
+.stats{display:flex;gap:10px;flex-wrap:wrap}
+.stat{background:var(--panel);border:1px solid var(--line);padding:10px 14px;min-width:92px}
+.stat b{display:block;font-family:var(--f-display);font-size:34px;line-height:1;font-weight:600}
+.stat small{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.finder{margin-top:22px;position:relative;max-width:560px}
+.finder label{display:block;margin-bottom:6px}
+.finder input{width:100%;background:var(--panel);border:1px solid var(--line);color:var(--fg);font:inherit;font-size:16px;padding:12px 14px 12px 40px;outline:none}
+.finder input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,209,102,.18)}
+.finder svg{position:absolute;left:13px;bottom:14px;width:16px;height:16px;stroke:var(--dim)}
+.results{margin-top:8px;display:grid;gap:6px;max-height:360px;overflow:auto}
+.res{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--g);padding:9px 12px;cursor:pointer;text-align:left;color:var(--fg);font:inherit;width:100%}
+.res:hover,.res:focus-visible{border-color:var(--g);outline:none}
+.res .gtag{font-family:var(--f-mono);font-size:10px;font-weight:700;color:var(--g);letter-spacing:.08em}
+.res .nm{font-weight:600;min-width:0}
+.res .nm small{display:block;color:var(--dim);font-weight:400;font-size:12.5px}
+.res .when{font-family:var(--f-mono);font-size:11.5px;color:var(--dim);text-align:right}
+.empty{color:var(--faint);font-size:13px;padding:6px 2px}
+
+/* TABS */
+.tabbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:rgba(11,13,18,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:4px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{--g:var(--gold);flex:0 0 auto;background:transparent;border:1px solid var(--line);color:var(--dim);font-family:var(--f-display);font-size:21px;letter-spacing:.06em;text-transform:uppercase;padding:6px 16px 3px;cursor:pointer;transform:skewX(-12deg);transition:.15s}
+.tab>span{display:inline-block;transform:skewX(12deg)}
+.tab:hover{color:var(--fg);border-color:var(--g)}
+.tab:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+.tab[aria-selected="true"]{background:var(--g);border-color:var(--g);color:#0b0d12}
+.tab i{font-style:normal;font-family:var(--f-mono);font-size:10px;margin-left:6px;opacity:.75;vertical-align:4px}
+
+/* PANELS */
+.panel{padding-block:28px 64px}
+.phead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 28px;align-items:flex-end;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--line);position:relative}
+.phead::after{content:"";position:absolute;left:0;bottom:-1px;width:120px;height:3px;background:var(--accent)}
+.phead h2{font-size:clamp(40px,6vw,68px);font-weight:700}
+.phead h2 em{font-style:normal;color:var(--accent)}
+.phead .sub{color:var(--dim);margin-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--f-mono);font-size:11.5px;padding:5px 9px;border:1px solid var(--line);background:var(--panel);color:var(--fg);white-space:nowrap}
+.chip.hot{border-color:var(--accent);color:var(--accent)}
+section+section{margin-top:34px}
+.sh{display:flex;align-items:baseline;gap:12px;margin-bottom:14px}
+.sh h3{font-size:30px}
+.sh .eyebrow{color:var(--accent)}
+.grid{display:grid;gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);padding:16px;min-width:0}
+.hl{animation:hl 2.2s ease-out 1}
+@keyframes hl{0%{box-shadow:0 0 0 3px var(--gold);background:rgba(255,209,102,.18)}100%{box-shadow:0 0 0 0 transparent}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* OVERVIEW */
+.days{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.day{background:var(--panel);border:1px solid var(--line);min-width:0}
+.day header{display:flex;justify-content:space-between;align-items:baseline;padding:14px 16px 10px;border-bottom:1px solid var(--line);background:var(--bg2)}
+.day header h3{font-size:34px}
+.day header small{font-family:var(--f-mono);color:var(--dim);font-size:11px}
+.ev{display:grid;grid-template-columns:86px 1fr;gap:10px;padding:11px 16px;border-bottom:1px dashed var(--line);position:relative}
+.ev:last-child{border-bottom:0}
+.ev::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;background:var(--g)}
+.ev time{font-family:var(--f-mono);font-size:12px;color:var(--fg);font-weight:700;line-height:1.35}
+.ev time small{display:block;color:var(--faint);font-weight:500}
+.ev .g{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;color:var(--g);font-weight:700}
+.ev .t{font-weight:600}
+.ev .d{color:var(--dim);font-size:13px}
+.later{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--dim)}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;background:var(--g);margin-right:6px;vertical-align:-1px}
+
+/* VALORANT bracket */
+.p-val{--accent:var(--val)}
+.bracket-scroll{overflow-x:auto;padding-bottom:6px}
+.bracket{display:grid;grid-template-columns:repeat(3,minmax(250px,1fr)) minmax(150px,.6fr);grid-template-rows:repeat(16,auto);column-gap:34px;row-gap:6px;min-width:960px}
+.rh{grid-row:auto}
+.mcard{background:var(--panel);border:1px solid var(--line);display:grid;grid-template-columns:auto 1fr;align-self:center;position:relative}
+.mcard .id{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--f-mono);font-size:10px;font-weight:700;letter-spacing:.06em;background:var(--accent);color:#0b0d12;padding:6px 4px;text-align:center}
+.mcard .body{padding:6px 10px;min-width:0}
+.mcard .tm{display:flex;justify-content:space-between;gap:8px;font-weight:600;font-size:13.5px;line-height:1.3}
+.mcard .tm+.tm{border-top:1px solid var(--line);padding-top:2px;margin-top:2px}
+.mcard .tm.tbd{color:var(--dim);font-weight:500;font-family:var(--f-mono);font-size:11.5px}
+.mcard .slot{font-family:var(--f-mono);font-size:10.5px;color:var(--accent);margin-top:3px}
+.mcard.r16::before,.mcard.r8::before{content:"";position:absolute;right:100%;top:50%;width:34px;height:1px;background:var(--line)}
+.colhead{font-family:var(--f-display);font-size:24px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;display:flex;justify-content:space-between;align-items:baseline}
+.colhead small{font-family:var(--f-mono);font-size:10.5px;color:var(--faint)}
+.adv{align-self:center;grid-row:1/17;grid-column:4;border:1px dashed var(--accent);padding:18px 14px;text-align:center;color:var(--dim)}
+.adv b{display:block;font-family:var(--f-display);font-size:44px;color:var(--accent);line-height:1}
+.slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.slots .card h4{margin:0 0 8px;font-family:var(--f-display);font-size:24px;font-weight:600;text-transform:uppercase}
+.slotrow{display:grid;grid-template-columns:110px 1fr;gap:8px;padding:6px 0;border-top:1px solid var(--line);font-size:13.5px}
+.slotrow b{font-family:var(--f-mono);font-size:12px}
+.slotrow span{color:var(--dim)}
+
+/* CODM */
+.p-codm{--accent:var(--codm)}
+.modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.mode{background:var(--panel);border:1px solid var(--line);padding:16px;position:relative;overflow:hidden}
+.mode .num{position:absolute;right:10px;top:-6px;font-family:var(--f-display);font-size:90px;color:rgba(143,209,79,.08);line-height:1}
+.mode h4{font-family:var(--f-display);font-size:30px;font-weight:600;margin:4px 0 2px;text-transform:uppercase;line-height:1}
+.mode p{margin:6px 0 0;color:var(--dim);font-size:13.5px}
+.groups7{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.grp{background:var(--panel);border:1px solid var(--line);padding:12px 14px;min-width:0}
+.grp h4{margin:0 0 8px;display:flex;justify-content:space-between;font-family:var(--f-display);font-size:24px;font-weight:600;text-transform:uppercase;color:var(--accent);line-height:1}
+.grp h4 small{font-family:var(--f-mono);font-size:10.5px;color:var(--faint);font-weight:500}
+.grp ol{list-style:none;margin:0;padding:0;display:grid;gap:3px;font-size:13.5px}
+.grp li{overflow-wrap:anywhere}
+.grp li::before{content:"▸ ";color:var(--faint)}
+.waves{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+.wave{background:var(--panel);border:1px solid var(--line);min-width:0}
+.wave header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--line)}
+.wave header h4{margin:0;font-family:var(--f-display);font-size:30px;font-weight:600;text-transform:uppercase;line-height:1}
+.wtimes{display:flex;gap:4px}
+.wtimes span{font-family:var(--f-mono);font-size:10.5px;padding:3px 6px;border:1px solid var(--line);text-align:center;line-height:1.25}
+.wtimes span small{display:block;color:var(--faint);font-size:9px}
+.lob{display:grid;grid-template-columns:58px 38px 1fr;gap:8px;align-items:center;padding:6px 14px;border-bottom:1px solid var(--line);font-size:13.5px}
+.lob:last-child{border-bottom:0}
+.lob .ln{font-family:var(--f-mono);font-size:10.5px;color:var(--faint)}
+.lob .gp{font-family:var(--f-mono);font-size:10.5px;font-weight:700;color:var(--accent)}
+.lob .mu{min-width:0;overflow-wrap:anywhere}
+.lob .mu i{font-style:normal;color:var(--faint);font-size:11.5px;margin:0 5px}
+.lob.idle .mu{color:var(--faint);font-style:italic}
+
+/* RULES */
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.rules ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.rules li{display:grid;grid-template-columns:auto 1fr;gap:10px;font-size:14px}
+.rules li b{font-family:var(--f-mono);font-size:12px;color:var(--accent);white-space:nowrap}
+.rules h4{margin:0 0 12px;font-family:var(--f-display);font-size:26px;font-weight:600;text-transform:uppercase}
+.ladder{display:grid;gap:6px}
+.ladder div{display:grid;grid-template-columns:130px 1fr;gap:10px;align-items:center;font-size:13.5px}
+.ladder .bar{height:20px;background:var(--panel2);position:relative}
+.ladder .bar::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);background:var(--sev)}
+
+/* FREE FIRE */
+.p-ff{--accent:var(--ff)}
+.ffday{margin-top:18px}
+.ffday-h{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;margin-bottom:10px}
+.ffday-h h4{margin:0;font-family:var(--f-display);font-size:30px;font-weight:600;text-transform:uppercase}
+.ffday-h span{font-family:var(--f-mono);font-size:12px;color:var(--dim)}
+.ffgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.ffg{background:var(--panel);border:1px solid var(--line);min-width:0;display:flex;flex-direction:column}
+.ffg header{display:flex;justify-content:space-between;align-items:baseline;padding:10px 12px 8px;border-bottom:2px solid var(--accent)}
+.ffg header h5{margin:0;font-family:var(--f-display);font-size:26px;font-weight:600;text-transform:uppercase;line-height:1}
+.ffg header small{font-family:var(--f-mono);font-size:10.5px;color:var(--dim)}
+.ffg ol{margin:0;padding:8px 12px;list-style:none;display:grid;gap:2px;font-size:13px;counter-reset:n;flex:1}
+.ffg li{counter-increment:n;display:grid;grid-template-columns:22px 1fr;gap:4px}
+.ffg li::before{content:counter(n,decimal-leading-zero);font-family:var(--f-mono);font-size:10.5px;color:var(--faint);padding-top:2px}
+.ffg li span{overflow-wrap:anywhere}
+.ffg footer{padding:7px 12px;font-family:var(--f-mono);font-size:11px;color:var(--accent);border-top:1px solid var(--line);background:rgba(255,159,28,.06)}
+.funnel{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;align-items:stretch}
+.fstep{background:var(--panel);border:1px solid var(--line);padding:14px;position:relative;min-width:0}
+.fstep+.fstep{border-left:0}
+.fstep b{display:block;font-family:var(--f-display);font-size:46px;line-height:.9;color:var(--accent)}
+.fstep .eyebrow{display:block;margin:4px 0}
+.fstep p{margin:0;font-size:13px;color:var(--dim)}
+.fstep.win{background:linear-gradient(160deg,rgba(255,209,102,.15),var(--panel))}
+.fstep.win b{color:var(--gold)}
+.runshow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;counter-reset:s}
+.runshow div{border-top:3px solid var(--line);padding:10px 12px 0 0;position:relative}
+.runshow div::before{content:"";position:absolute;top:-8px;left:0;width:13px;height:13px;background:var(--bg);border:3px solid var(--accent);transform:rotate(45deg)}
+.runshow b{font-family:var(--f-mono);font-size:14px;display:block;margin-top:6px}
+.runshow span{font-size:13px;color:var(--dim)}
+
+/* BGMI */
+.p-bgmi{--accent:var(--bgmi)}
+.bgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.bg{background:var(--panel);border:1px solid var(--line);min-width:0}
+.bg header{padding:12px 14px;display:flex;justify-content:space-between;align-items:baseline;background:var(--bg2);border-bottom:1px solid var(--line)}
+.bg header h5{margin:0;font-family:var(--f-display);font-size:28px;font-weight:600;text-transform:uppercase;line-height:1}
+.bg header small{font-family:var(--f-mono);font-size:10.5px;color:var(--accent)}
+.bg ol{list-style:none;margin:0;padding:6px 0;counter-reset:n}
+.bg li{counter-increment:n;display:grid;grid-template-columns:26px 1fr;gap:6px;padding:5px 14px;border-bottom:1px solid rgba(42,50,66,.55)}
+.bg li:last-child{border-bottom:0}
+.bg li::before{content:counter(n,decimal-leading-zero);font-family:var(--f-mono);font-size:10.5px;color:var(--faint);padding-top:3px}
+.bg li b{font-weight:600;font-size:13.5px;display:block;overflow-wrap:anywhere}
+.bg li small{color:var(--dim);font-size:12px}
+.stages{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stage{background:var(--panel);border:1px solid var(--line);padding:16px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.stage .eyebrow{color:var(--accent)}
+.stage h4{margin:0;font-family:var(--f-display);font-size:30px;font-weight:600;text-transform:uppercase;line-height:1}
+.stage p{margin:0;font-size:13.5px;color:var(--dim)}
+.stage.final{border-color:var(--gold);background:linear-gradient(160deg,rgba(255,209,102,.12),var(--panel))}
+.stage.final .eyebrow{color:var(--gold)}
+.maps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.map{background:var(--panel);border:1px solid var(--line);padding:14px;position:relative;overflow:hidden}
+.map .mn{font-family:var(--f-mono);font-size:10.5px;color:var(--accent)}
+.map h4{margin:2px 0 4px;font-family:var(--f-display);font-size:34px;font-weight:600;text-transform:uppercase;line-height:1}
+.map time{font-family:var(--f-mono);font-size:12.5px;color:var(--dim)}
+.pts{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px}
+.pts div{background:var(--panel);border:1px solid var(--line);text-align:center;padding:8px 2px}
+.pts b{display:block;font-family:var(--f-display);font-size:30px;line-height:1;color:var(--accent)}
+.pts small{font-family:var(--f-mono);font-size:10px;color:var(--dim)}
+
+footer.foot{border-top:1px solid var(--line);padding-block:20px 40px;color:var(--faint);font-size:12.5px}
+
+@media (max-width:980px){
+  .days,.later,.slots,.modes{grid-template-columns:1fr}
+  .ffgrid,.bgrid,.stages{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .funnel{grid-template-columns:1fr 1fr}
+  .fstep+.fstep{border-left:1px solid var(--line)}
+  .hero-grid{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .ffgrid,.bgrid,.stages,.maps,.runshow{grid-template-columns:1fr}
+  .runshow{gap:14px}
+  .pts{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .waves{grid-template-columns:1fr}
+  .ev{grid-template-columns:74px 1fr}
+  .stat{min-width:0;flex:1 1 70px}
+  .res{grid-template-columns:auto 1fr}
+  .res .when{grid-column:2;text-align:left}
+}
+</style>
+
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Yugaantar 2026 · Esports Pre-Rounds · All times IST</div>
+        <h1>Match Week <span>Briefing</span></h1>
+        <p>Every lobby, wave and bracket slot for the online pre-rounds, 23–25 November. Pick a game below, or search your team to see exactly when and where you play.</p>
+      </div>
+      <div class="stats">
+        <div class="stat cut"><b class="tnum">4</b><small>Titles</small></div>
+        <div class="stat cut"><b class="tnum">252</b><small>Teams</small></div>
+        <div class="stat cut"><b class="tnum">3</b><small>Match nights</small></div>
+      </div>
+    </div>
+    <div class="finder">
+      <label for="q" class="eyebrow">Find your team</label>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Type a team name, e.g. Kid Slayers" autocomplete="off">
+      <div class="results" id="results" aria-live="polite"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabbar" aria-label="Games">
+  <div class="wrap tabs" role="tablist" id="tabs">
+    <button class="tab" role="tab" data-t="overview" style="--g:var(--gold)"><span>Overview</span></button>
+    <button class="tab" role="tab" data-t="valorant" style="--g:var(--val)"><span>Valorant<i>32</i></span></button>
+    <button class="tab" role="tab" data-t="codm" style="--g:var(--codm)"><span>CODM<i>29</i></span></button>
+    <button class="tab" role="tab" data-t="freefire" style="--g:var(--ff)"><span>Free Fire MAX<i>127</i></span></button>
+    <button class="tab" role="tab" data-t="bgmi" style="--g:var(--bgmi)"><span>BGMI<i>64</i></span></button>
+  </div>
+</nav>
+
+<main>
+<!-- OVERVIEW -->
+<div class="panel wrap" id="p-overview" role="tabpanel">
+  <div class="phead">
+    <div><div class="eyebrow">Run of show</div><h2>Three nights, <em>four games</em></h2><div class="sub">What's live each day across all titles. Times are IST.</div></div>
+    <div class="legend">
+      <span style="--g:var(--val)">Valorant</span><span style="--g:var(--codm)">CODM</span><span style="--g:var(--ff)">Free Fire MAX</span><span style="--g:var(--bgmi)">BGMI</span>
+    </div>
+  </div>
+  <div class="days" id="days"></div>
+  <section>
+    <div class="sh"><span class="eyebrow">After the pre-rounds</span><h3>What comes next</h3></div>
+    <div class="later" id="later"></div>
+  </section>
+</div>
+
+<!-- VALORANT -->
+<div class="panel wrap p-val" id="p-valorant" role="tabpanel" hidden>
+  <div class="phead">
+    <div><div class="eyebrow">Valorant Pre-Round</div><h2>Knockout <em>bracket</em></h2><div class="sub">32 teams. Best-of-1, single elimination, no byes. Lose once and you're out.</div></div>
+    <div class="chips"><span class="chip hot">BO1</span><span class="chip">Check-in 8:40 PM</span><span class="chip">23–25 Nov</span><span class="chip">28 matches</span></div>
+  </div>
+  <section>
+    <div class="bracket-scroll"><div class="bracket" id="bracket"></div></div>
+  </section>
+  <section>
+    <div class="sh"><span class="eyebrow">Slot sheet</span><h3>Who plays when</h3></div>
+    <div class="slots" id="valslots"></div>
+  </section>
+  <section>
+    <div class="rules">
+      <div class="card"><h4>How later rounds pair up</h4>
+        <ul>
+          <li><b>R16-01</b><span>Winner of R32-01 vs Winner of R32-02. Every "Winner" slot follows the same rule.</span></li>
+          <li><b>25 Nov</b><span>All six remaining R16 matches run 9–10 PM, then all four R8 matches 10–11 PM, so no team overlaps.</span></li>
+        </ul></div>
+      <div class="card"><h4>Daily load</h4>
+        <div class="ladder" id="valload"></div></div>
+    </div>
+  </section>
+</div>
+
+<!-- CODM -->
+<div class="panel wrap p-codm" id="p-codm" role="tabpanel" hidden>
+  <div class="phead">
+    <div><div class="eyebrow">CODM Carnage 2.0</div><h2>Rift <em>Ops</em></h2><div class="sub">29 teams in 7 groups. BO1 round robin across 7 lobbies. Same matchups every day; only the mode and start time change.</div></div>
+    <div class="chips"><span class="chip hot">Round robin</span><span class="chip">7 lobbies</span><span class="chip">Check-in 30 min before Wave 01</span></div>
+  </div>
+  <section>
+    <div class="modes" id="modes"></div>
+  </section>
+  <section>
+    <div class="sh"><span class="eyebrow">Groups</span><h3>Squads</h3></div>
+    <div class="groups7" id="codmgroups"></div>
+  </section>
+  <section>
+    <div class="sh"><span class="eyebrow">Wave & lobby sheet</span><h3>Deployment waves</h3></div>
+    <div class="waves" id="waves"></div>
+  </section>
+  <section>
+    <div class="rules">
+      <div class="card"><h4>Match-day rules</h4>
+        <ul>
+          <li><b>Check-in</b><span>With your lobby referee, 30 min before the day's first wave.</span></li>
+          <li><b>Join</b><span>Enter the room within 10 min of the invite.</span></li>
+          <li><b>Results</b><span>Winning captain posts the scoreboard screenshot in the results channel within 10 min.</span></li>
+          <li><b>Banned</b><span>Any banned item, including all wildcards, means disqualification.</span></li>
+        </ul></div>
+      <div class="card"><h4>Late penalties</h4>
+        <div class="ladder">
+          <div><span class="mono">0–5 min</span><span class="bar" style="--w:25%;--sev:#e8c547"></span></div>
+          <div style="margin-top:-4px"><span></span><small style="color:var(--dim)">Warning</small></div>
+          <div><span class="mono">5–10 min</span><span class="bar" style="--w:50%;--sev:#f29b38"></span></div>
+          <div style="margin-top:-4px"><span></span><small style="color:var(--dim)">S&amp;D: lose first round · HP/DOM: warning</small></div>
+          <div><span class="mono">10–15 min</span><span class="bar" style="--w:75%;--sev:#f26a3a"></span></div>
+          <div style="margin-top:-4px"><span></span><small style="color:var(--dim)">Forfeit the match</small></div>
+          <div><span class="mono">15+ / no-show</span><span class="bar" style="--w:100%;--sev:#ff4655"></span></div>
+          <div style="margin-top:-4px"><span></span><small style="color:var(--dim)">Disqualification</small></div>
+        </div></div>
+      <div class="card"><h4>Qualification</h4>
+        <ul>
+          <li><b>Top 8</b><span>The 7 group winners plus the best runner-up advance.</span></li>
+          <li><b>27–29 Nov</b><span>Offline knockout at Yugaantar Gaming Arena.</span></li>
+        </ul></div>
+    </div>
+  </section>
+</div>
+
+<!-- FREE FIRE -->
+<div class="panel wrap p-ff" id="p-freefire" role="tabpanel" hidden>
+  <div class="phead">
+    <div><div class="eyebrow">Yugaantar 2026 · Free Fire MAX</div><h2>Battle royale <em>qualifiers</em></h2><div class="sub">127 teams, 555 players, 11 groups. Each group plays 3 BR matches: Bermuda, Purgatory, Kalahari. Top finishers qualify straight to the LAN semifinals.</div></div>
+    <div class="chips"><span class="chip hot">9:00–11:25 PM daily</span><span class="chip">Check-in 8:30 PM</span><span class="chip">Room ID 8:45 PM</span></div>
+  </div>
+  <section>
+    <div class="sh"><span class="eyebrow">Match night</span><h3>Run of show</h3></div>
+    <div class="runshow">
+      <div><b>8:30 PM</b><span>IGL check-in in the Discord group channel</span></div>
+      <div><b>8:45 PM</b><span>Room ID &amp; password posted in captain channel</span></div>
+      <div><b>8:55 PM</b><span>Roll call. Emulators and unregistered players are kicked</span></div>
+      <div><b>9:00 PM</b><span>Room locks and match launches sharp</span></div>
+    </div>
+  </section>
+  <section id="ffdays"></section>
+  <section>
+    <div class="sh"><span class="eyebrow">Road to champion</span><h3>Progression</h3></div>
+    <div class="funnel">
+      <div class="fstep"><b class="tnum">127</b><span class="eyebrow">Online qualifiers</span><p>23–25 Nov, 11 groups. Day 1 top 5 per group; Days 2–3 top 4.</p></div>
+      <div class="fstep"><b class="tnum">48</b><span class="eyebrow">Semifinal pool</span><p>20 + 16 + 12 direct qualifiers. Seed draw on 26 Nov.</p></div>
+      <div class="fstep"><b class="tnum">4×12</b><span class="eyebrow">LAN semifinals</span><p>SST offline. 4 groups, 3 BR matches each, top 3 advance.</p></div>
+      <div class="fstep"><b class="tnum">12</b><span class="eyebrow">Grand finals</span><p>1 lobby, 6 BR matches (2× map rotation).</p></div>
+      <div class="fstep win"><b>1st</b><span class="eyebrow">Champion</span><p>Podium: Champion, 1st runner-up, 2nd runner-up.</p></div>
+    </div>
+  </section>
+  <section>
+    <div class="rules">
+      <div class="card"><h4>Placement points</h4><div class="pts" id="ffpts"></div>
+        <p style="color:var(--dim);font-size:13px;margin:10px 0 0">11th–12th: 0 pts · Kills: +1 per verified elimination</p></div>
+      <div class="card"><h4>Tiebreakers</h4>
+        <ul><li><b>1</b><span>Total Booyahs</span></li><li><b>2</b><span>Total kills</span></li><li><b>3</b><span>Last match placement</span></li>
+        <li><b>26 Nov</b><span>Buffer day &amp; LAN seed briefing at 9 PM</span></li></ul></div>
+    </div>
+  </section>
+</div>
+
+<!-- BGMI -->
+<div class="panel wrap p-bgmi" id="p-bgmi" role="tabpanel" hidden>
+  <div class="phead">
+    <div><div class="eyebrow">Yugaantar 2026 · BGMI</div><h2>Drop <em>zone</em></h2><div class="sub">64 teams in 4 groups. Points-based, not knockout: cumulative points across every match in your group decide who moves on.</div></div>
+    <div class="chips"><span class="chip hot">Mobile only · no iPads</span><span class="chip">Session 8:30 PM–12 AM</span><span class="chip">3 matches / night</span></div>
+  </div>
+  <section>
+    <div class="stages">
+      <div class="stage"><span class="eyebrow">Mon 23 Nov · Qualifier Day 1</span><h4>Groups A &amp; B</h4><p>32 teams play 3 matches in parallel lobbies.</p></div>
+      <div class="stage"><span class="eyebrow">Tue 24 Nov · Qualifier Day 2</span><h4>Groups C &amp; D</h4><p>32 teams play 3 matches. Top 32 overall advance.</p></div>
+      <div class="stage"><span class="eyebrow">Wed 25 Nov · Semi-finals</span><h4>Top 32</h4><p>Each group plays 3 matches. Top 16 advance to the finals.</p></div>
+      <div class="stage final"><span class="eyebrow">Sat 28 Nov · 12–4 PM</span><h4>Grand Finals</h4><p>Top 16 on Scaler campus. 1 lobby, 4 matches.</p></div>
+    </div>
+  </section>
+  <section>
+    <div class="sh"><span class="eyebrow">Same every night · Mon, Tue, Wed</span><h3>Map rotation</h3></div>
+    <div class="maps">
+      <div class="map"><div class="mn">MATCH 1</div><h4>Rondo</h4><time>9:00–9:30 PM</time></div>
+      <div class="map"><div class="mn">MATCH 2</div><h4>Erangel</h4><time>10:00–10:30 PM</time></div>
+      <div class="map"><div class="mn">MATCH 3</div><h4>Miramar</h4><time>11:00–11:30 PM</time></div>
+    </div>
+  </section>
+  <section>
+    <div class="sh"><span class="eyebrow">Qualifier groups · leader shown under each team</span><h3>Squads</h3></div>
+    <div class="bgrid" id="bgmigroups"></div>
+  </section>
+  <section>
+    <div class="rules">
+      <div class="card"><h4>Placement points</h4><div class="pts" id="bgpts"></div>
+        <p style="color:var(--dim);font-size:13px;margin:10px 0 0">+1 point per elimination</p></div>
+      <div class="card"><h4>Tiebreakers &amp; rules</h4>
+        <ul><li><b>1</b><span>Total WWCDs</span></li><li><b>2</b><span>Total placement points</span></li><li><b>3</b><span>Total kill points</span></li><li><b>4</b><span>Most recent match placement</span></li>
+        <li><b>Room</b><span>ID &amp; password shared by officials only.</span></li>
+        <li><b>Final</b><span>Organiser decisions are final and binding.</span></li></ul></div>
+    </div>
+  </section>
+</div>
+</main>
+
+<footer class="foot"><div class="wrap">Source: Tournament Fixtures (collated) for Yugaantar 2026 esports pre-rounds. All times IST.</div></footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const GC={valorant:"var(--val)",codm:"var(--codm)",freefire:"var(--ff)",bgmi:"var(--bgmi)"};
+const GN={valorant:"VALORANT",codm:"CODM",freefire:"FREE FIRE",bgmi:"BGMI"};
+
+/* ---------- DATA ---------- */
+const VAL_R32=[
+ ["NoFrags","0 UTIL","Mon 23","9–10 PM"],["SasteSentinels","Connectors","Mon 23","9–10 PM"],["The Mentalist","Plant the Damn Spike","Mon 23","9–10 PM"],["Larpers","Team Sabzi","Mon 23","9–10 PM"],
+ ["Shikaripalya","Bacardi","Mon 23","10–11 PM"],["Dhandewale","Slackers","Mon 23","10–11 PM"],["Team CC","Team Sanity","Mon 23","10–11 PM"],["Genesis Guild","PAAJI WARRIORS","Mon 23","10–11 PM"],
+ ["Scaler's Last Hope","Kati Patang","Tue 24","8–9 PM"],["Kid Slayers","TEAM JAIN OFFICIAL","Tue 24","8–9 PM"],["5GUYS1SPIKE","RogueOps","Tue 24","8–9 PM"],["HEXFLARE","Valor Vibe","Tue 24","8–9 PM"],
+ ["Team Omega","Chaos Theory","Tue 24","9–10 PM"],["Novena","SoulSyndicate","Tue 24","9–10 PM"],["Immortal Blood","Viper Squad","Tue 24","9–10 PM"],["PlasticX","DreamChasers","Tue 24","9–10 PM"]];
+const r16slot=j=>j<2?["Tue 24","10–11 PM"]:["Wed 25","9–10 PM"];
+const pad=n=>String(n).padStart(2,"0");
+
+const CODM_GROUPS={A:["LIQUID","Nuclear","Barrel House","ThaiyirSaadham"],B:["J²DYS","Team Zero","Blitz Raiders","TF141"],C:["Team Lost","EDGE","Team Crackillusion","Kid Slayers"],D:["Offset","Darkhold","Sapne Suhane...","Bawts"],E:["Freakuency","beAtBreAkers@!","Money_follows","Gobi Ke Parathe"],F:["THE COMRADES","ABCDEFGHIJKLMNOPQRSTUVWXYZ","Free Kills","$500"],G:["Last Warning","Smoke","cod vinashak","Clutch crew","RVCE"]};
+const CODM_T1=["9:30 PM","9:50 PM","10:10 PM","10:30 PM","10:50 PM","11:10 PM","11:30 PM"];
+const CODM_T2=["12:30 PM","12:50 PM","1:10 PM","1:45 PM","2:05 PM","2:40 PM","3:00 PM"];
+const CODM_W=[
+ [["G","Clutch crew","RVCE"],["G","Last Warning","Smoke"],["A","Barrel House","ThaiyirSaadham"],["A","LIQUID","Nuclear"],["B","Blitz Raiders","TF141"],["B","J²DYS","Team Zero"],["C","EDGE","Kid Slayers"]],
+ [["G","Last Warning","cod vinashak"],["C","Team Lost","Team Crackillusion"],["D","Darkhold","Bawts"],["D","Offset","Sapne Suhane..."],["E","Freakuency","Gobi Ke Parathe"],["E","beAtBreAkers@!","Money_follows"],["F","ABCDEFGHIJKLMNOPQRSTUVWXYZ","$500"]],
+ [["F","THE COMRADES","Free Kills"],["G","Smoke","Clutch crew"],["G","cod vinashak","RVCE"],["A","LIQUID","Barrel House"],["A","Nuclear","ThaiyirSaadham"],["B","J²DYS","Blitz Raiders"],["B","Team Zero","TF141"]],
+ [["C","EDGE","Team Crackillusion"],["C","Team Lost","Kid Slayers"],["D","Darkhold","Sapne Suhane..."],["D","Offset","Bawts"],["E","Freakuency","Money_follows"],["E","beAtBreAkers@!","Gobi Ke Parathe"],["F","ABCDEFGHIJKLMNOPQRSTUVWXYZ","Free Kills"]],
+ [["F","THE COMRADES","$500"],["G","Last Warning","Clutch crew"],["G","Smoke","RVCE"],["A","LIQUID","ThaiyirSaadham"],["A","Nuclear","Barrel House"],["B","J²DYS","TF141"],["B","Team Zero","Blitz Raiders"]],
+ [["G","Smoke","cod vinashak"],["C","Team Crackillusion","Kid Slayers"],["C","Team Lost","EDGE"],["D","Offset","Darkhold"],["D","Sapne Suhane...","Bawts"],["E","Freakuency","beAtBreAkers@!"],["E","Money_follows","Gobi Ke Parathe"]],
+ [["F","Free Kills","$500"],["F","THE COMRADES","ABCDEFGHIJKLMNOPQRSTUVWXYZ"],["G","Last Warning","RVCE"],["G","cod vinashak","Clutch crew"],null,null,null]];
+
+const FF={
+ A:["ACE eSports","Gladiator eSports","BLACK MATRIX","TOXIC EMPIRE","Tuppa Khali","Numerical Players","CRACKILLUSION","Dolakpur","One tap union","IDENTITY","NM ESPORTS","Hunter pandu"],
+ B:["SCARLETDOOM","Team Elite","Crimson Conquerors","TEAM MARVEL","VICTUS","Team Phoenix","MODi G","IMMORTAL ESPORTS","TEAM VERSATILE","TEAM VENOM","UZUMAKI","Avengers"],
+ C:["Ultron","Zephyrus","God's Rein","Hunters","AKATSUKI Esports","Dragon Ball","Team Immortal","DreadLegion","team BST","Not humans","INVINCIBLES","The Rulers"],
+ D:["4-play","Team Xenon","SIMPLE GUYS","ZONEX","AK Legends","Legacies","Agaaz","TEAM APEX","Sky esports","TEAM FENRIR","ARSENAL","DOMINATORS"],
+ E:["Galaxy Hunters","Sin ArchBishops","Dandupalem","Dominater","IHMB KINGS","Fantastic4","Shadow Hawks","Vortex","INFERNO","Pehelwanpur","DoomBots","OG Brothers"],
+ F:["IMMORTAL","Kotha","Four star","Team op","ZERO MERCY (1)","Us gang","Chicken Dinner","CPians","Team OG","Josephites IFA","TELUGU TITANS","team SHADOW"],
+ G:["Skull Breakers","BombayShavingCompany","SEEMA BOYS","FUTURE ESP","D.R.U.N","C-MAX","ONLY:GOD!","Team Rushers","Fallen titans","TEAM SPARK","NHK ESPORTS"],
+ H:["Team Powerhouse","_Prime✓legion_","Team Abyss crew","Center fresh","Vasteguna Huiya","Requiem","Last Stand","Born2Kill","7SWORDS","D GANG","Tufferz"],
+ I:["ZERO MERCY (2)","Troopers","The TyreLess Bastards","ALTER-EGO","RMA Fighters","Satluj","ZeroOne","FRAGORA","Titan FF","GodxMacro","FAILURES"],
+ J:["Anteiku","Riders","LOSERS","Team NaMg","Unknown knights","Code4Us","Maut Ke Saudagar","Sdc kaand","NO MERCY","Team infero","DEATH SYNDICATE"],
+ K:["SILENT KILLER","X PLANETS","HUNTERS","Faaahhh Esports","4Flukes","TEAM DOOM","All eyes on us","TEAM ICONIC","Techno Blast","Apex dominion","FIREGODS"]};
+const FF_DAYS=[
+ {d:"Day 1 · Mon 23 Nov",g:"ABCD",top:5,note:"48 teams · top 5 per group = 20 semifinalists"},
+ {d:"Day 2 · Tue 24 Nov",g:"EFGH",top:4,note:"46 teams · top 4 per group = 16 semifinalists"},
+ {d:"Day 3 · Wed 25 Nov",g:"IJK",top:4,note:"33 teams · top 4 per group = 12 semifinalists"}];
+
+const BG={
+ A:[["Powerpuff Boyz","Nabi Abhishikth Zacharias"],["Team DarkX","Mahendra"],["Team Edge","Komal"],["Zero Hour","Shashank Ojha"],["RAVEN","Harsh"],["Aaja Bhid Le","Vedish Bansal"],["TAGrealmadrid","Anurag Singh"],["Godlike","Yogeshwaran S"],["Atomic Stickers","Alston R"],["Krishna Strikers","Pratheek Ullagaddi"],["Team Rio","Tej Kumar S"],["The Wrath","Kushal V"],["Alter Ego","Sharan Puttu"],["Teamprime","Mahantesh"],["MAGNUM Virtue","Vishnu Keerthan Reddy"],["DIVINE X","Vinith Kumar"]],
+ B:[["Nongshim RedForce (NSR)","Ayush Jha"],["Crackillusion","Arima Patel"],["GURKHA LEGION","Taushif Ansari"],["TEAM-INVICTUS","Shreyas"],["Supreme 5","Samanyu J"],["belowZero","Haddi"],["ReignX","Debarghya Misra"],["Team Scammers","Sagar J"],["Team light","Vikas D"],["TEAM ALPHA","Siddiq Khan"],["VOID Esports","Mohammed Jawad"],["TEAM BATMAN","Phantom"],["Team Francis","Md Rayyan"],["THUNDER TALKS","Anurag D Solanki"],["Total gaming eSports","Dhanush Reddy"],["NoScope","Pratham Kanani"]],
+ C:[["Gooner Grounds","Javin Arora"],["Team Zero","Akshat Mittal"],["Team EXODUS","Adnan Ahmed"],["Gatua Gang","Rudra Patel"],["Satluj","Vidhu Mahajan"],["DeadDrop","Vaibhav Agrawal"],["Kolaaru Gang","Anantha Raman"],["The Mentalist","Mehank Chopde"],["BIRIYANI POINT","Varun"],["Team Devine","Uday Kumar"],['System.out.print("hello world")',"Ritwik Rana"],["War_Machine","Mahammed Tawseef"],["BombayShavingCompany","Mukhesh Aravind"],["APEX","Prajwal N"],["SEGMENT","Rishi Nikhil"],["TEAM DSYNC","Syed Irfan"]],
+ D:[["Team Avengers","Arjun"],["Gods Plan","Pruthviraj Shinde"],["Bharose wala","Adhyan Chettri"],["Team Real","Satvik Punaini"],["Akatsuki","Patel Jahan"],["AFTERHOURS","Rangesh Mishra"],["Team-NEMESIS","Vijay Kumar"],["♕ KRAKEN_BLAZE ♕","Gamers Dude"],["STELLA","Dhruv Sharma"],["Team Enigma","Rudra Kaushik"],["RoyalFlush","Sushant Singh"],["BENGALURU RUSHERS","Shashanth"],["The TyreLess Bastards","Romit Raj Sahu"],["KANYARAASI","Devi Sai Charan Maturu"],["Sage","Shivansh Singh"],["Team Baddiezzz","Akshit K"]]};
+
+/* ---------- OVERVIEW ---------- */
+const DAYS=[
+ {h:"Mon",d:"23 Nov",ev:[
+  ["bgmi","8:30 PM","12:00 AM","Qualifier Day 1 · Groups A & B","32 teams · Rondo, Erangel, Miramar"],
+  ["valorant","8:40 PM","check-in","Round of 32 · R32-01 to R32-08","9–10 PM: matches 01–04 · 10–11 PM: 05–08"],
+  ["freefire","9:00 PM","11:25 PM","Groups A–D","48 teams · top 5 per group advance · check-in 8:30"],
+  ["codm","9:30 PM","11:50 PM","Hardpoint · Summit","Waves 01–07 · check-in 9:00 PM"]]},
+ {h:"Tue",d:"24 Nov",ev:[
+  ["codm","12:30 PM","3:40 PM","Domination · Raid","Waves 01–07 · check-in 12:00 PM"],
+  ["valorant","8:00 PM","11:00 PM","R32-09 to 16, then R16-01 & 02","8–9 PM: 09–12 · 9–10 PM: 13–16 · 10–11 PM: R16-01, 02"],
+  ["bgmi","8:30 PM","12:00 AM","Qualifier Day 2 · Groups C & D","32 teams · top 32 overall advance"],
+  ["freefire","9:00 PM","11:25 PM","Groups E–H","46 teams · top 4 per group advance"]]},
+ {h:"Wed",d:"25 Nov",ev:[
+  ["codm","TBD","","Search & Destroy · Firing Range","Same waves and lobbies as Days 1–2"],
+  ["bgmi","8:30 PM","12:00 AM","Semi-finals · Top 32","Top 16 advance to Grand Finals"],
+  ["valorant","9:00 PM","11:00 PM","R16-03 to 08, then Round of 8","9–10 PM: six R16 matches · 10–11 PM: four R8 matches"],
+  ["freefire","9:00 PM","11:25 PM","Groups I–K","33 teams · top 4 per group advance"]]}];
+$("#days").innerHTML=DAYS.map(D=>`<article class="day"><header><h3>${D.h} ${D.d.split(" ")[0]}</h3><small>${D.d.toUpperCase()} · ${D.ev.length} EVENTS</small></header>${
+ D.ev.map(([g,a,b,t,d])=>`<div class="ev" style="--g:${GC[g]}"><time>${a}${b?`<small>${b==="check-in"?"check-in":"– "+b}</small>`:""}</time><div><div class="g">${GN[g]}</div><div class="t">${esc(t)}</div><div class="d">${esc(d)}</div></div></div>`).join("")}</article>`).join("");
+const LATER=[
+ ["freefire","Thu 26 Nov · 9 PM","Buffer day & LAN seed briefing","48 semifinalists drawn into 4 LAN semifinal groups (SST offline)."],
+ ["codm","27–29 Nov","Offline knockout","Top 8 at Yugaantar Gaming Arena: 7 group winners + best runner-up."],
+ ["bgmi","Sat 28 Nov · 12–4 PM","Grand Finals on campus","Top 16 at Scaler campus. 1 lobby, 4 matches."]];
+$("#later").innerHTML=LATER.map(([g,w,t,d])=>`<div class="card ev" style="--g:${GC[g]};display:block;padding-left:20px"><div class="g">${GN[g]} · ${w}</div><div class="t" style="font-size:17px;margin:2px 0">${t}</div><div class="d">${d}</div></div>`).join("");
+
+/* ---------- VALORANT ---------- */
+(()=>{
+ let h=`<div class="colhead" style="grid-column:1;grid-row:auto"></div>`;
+ const B=$("#bracket");
+ const rows=[];
+ rows.push(`<div class="colhead" style="grid-column:1;grid-row:1/2;align-self:end;margin:0"></div>`);
+ const card=(cls,id,a,b,day,time,row,col,span,team)=>`<div class="mcard ${cls}" style="grid-column:${col};grid-row:${row}/span ${span}" ${team?`data-match="${id}"`:""} id="m-${id}"><div class="id">${id}</div><div class="body"><div class="tm ${team?"":"tbd"}">${esc(a)}</div><div class="tm ${team?"":"tbd"}">${esc(b)}</div><div class="slot">${day.toUpperCase()} · ${time}</div></div></div>`;
+ let html=`<div class="colhead" style="grid-column:1;grid-row:1">Round of 32<small>23–24 NOV</small></div><div class="colhead" style="grid-column:2;grid-row:1">Round of 16<small>24–25 NOV</small></div><div class="colhead" style="grid-column:3;grid-row:1">Round of 8<small>25 NOV</small></div><div class="colhead" style="grid-column:4;grid-row:1">Advance</div>`;
+ VAL_R32.forEach(([a,b,d,t],i)=>{html+=card("r32","R32-"+pad(i+1),a,b,d,t,i+2,1,1,true)});
+ for(let j=0;j<8;j++){const[d,t]=r16slot(j);html+=card("r16","R16-"+pad(j+1),"Winner R32-"+pad(2*j+1),"Winner R32-"+pad(2*j+2),d,t,2*j+2,2,2,false)}
+ for(let k=0;k<4;k++)html+=card("r8","R8-"+pad(k+1),"Winner R16-"+pad(2*k+1),"Winner R16-"+pad(2*k+2),"Wed 25","10–11 PM",4*k+2,3,4,false);
+ html+=`<div class="adv" style="grid-row:2/18"><b>TOP 8</b>Round of 8 winners move on from the pre-round</div>`;
+ B.style.gridTemplateRows="auto repeat(16,auto)";
+ B.innerHTML=html;
+ const slots=[
+  ["Mon 23 Nov",[["9–10 PM","R32-01 → R32-04"],["10–11 PM","R32-05 → R32-08"]],"8 matches"],
+  ["Tue 24 Nov",[["8–9 PM","R32-09 → R32-12"],["9–10 PM","R32-13 → R32-16"],["10–11 PM","R16-01, R16-02"]],"10 matches · starts 8 PM"],
+  ["Wed 25 Nov",[["9–10 PM","R16-03 → R16-08"],["10–11 PM","R8-01 → R8-04"]],"10 matches"]];
+ $("#valslots").innerHTML=slots.map(([d,r,n])=>`<div class="card"><h4>${d}</h4>${r.map(([t,m])=>`<div class="slotrow"><b>${t}</b><span>${m}</span></div>`).join("")}<div class="slotrow"><b>Total</b><span>${n}</span></div></div>`).join("");
+ $("#valload").innerHTML=[["Mon 23",8],["Tue 24",10],["Wed 25",10]].map(([d,n])=>`<div><span class="mono">${d} · ${n}</span><span class="bar" style="--w:${n*10}%;--sev:var(--val)"></span></div>`).join("")+`<p style="color:var(--dim);font-size:13px;margin:6px 0 0">No day exceeds 10 matches.</p>`;
+})();
+
+/* ---------- CODM ---------- */
+$("#modes").innerHTML=[
+ ["Day 1 · Mon 23 Nov","Hardpoint · Summit","Check-in 9:00 PM · Waves 9:30–11:50 PM"],
+ ["Day 2 · Tue 24 Nov","Domination · Raid","Check-in 12:00 PM · Waves 12:30–3:40 PM"],
+ ["Day 3 · Wed 25 Nov","Search & Destroy · Firing Range","Timings TBD"]].map(([d,m,t],i)=>`<div class="mode"><span class="num">0${i+1}</span><div class="eyebrow" style="color:var(--codm)">${d}</div><h4>${esc(m)}</h4><p class="mono" style="font-size:12px">${t}</p></div>`).join("");
+$("#codmgroups").innerHTML=Object.entries(CODM_GROUPS).map(([g,ts])=>`<div class="grp" id="cg-${g}"><h4>Group ${g}<small>${ts.length} TEAMS</small></h4><ol>${ts.map(t=>`<li>${esc(t)}</li>`).join("")}</ol></div>`).join("");
+$("#waves").innerHTML=CODM_W.map((w,i)=>`<article class="wave" id="wave-${i+1}"><header><h4>Wave ${pad(i+1)}</h4><div class="wtimes"><span><small>23 · HP</small>${CODM_T1[i]}</span><span><small>24 · DOM</small>${CODM_T2[i]}</span><span><small>25 · S&amp;D</small>TBD</span></div></header>${
+ w.map((m,l)=>m?`<div class="lob"><span class="ln">Lobby ${l+1}</span><span class="gp">G-${m[0]}</span><span class="mu">${esc(m[1])}<i>vs</i>${esc(m[2])}</span></div>`:`<div class="lob idle"><span class="ln">Lobby ${l+1}</span><span></span><span class="mu">Lobby idle</span></div>`).join("")}</article>`).join("");
+
+/* ---------- FREE FIRE ---------- */
+$("#ffdays").innerHTML=`<div class="sh"><span class="eyebrow">Group allocations</span><h3>Lobbies by night</h3></div>`+FF_DAYS.map(D=>`<div class="ffday"><div class="ffday-h"><h4>${D.d}</h4><span>9:00–11:25 PM · ${D.note}</span></div><div class="ffgrid">${
+ [...D.g].map((g,i)=>`<div class="ffg" id="ffg-${g}"><header><h5>Group ${g}</h5><small>LOBBY ${i+1} · ${FF[g].length} TEAMS</small></header><ol>${FF[g].map(t=>`<li><span>${esc(t)}</span></li>`).join("")}</ol><footer>Top ${D.top} advance → LAN semifinals</footer></div>`).join("")}</div></div>`).join("");
+$("#ffpts").innerHTML=[12,9,8,7,6,5,4,3,2,1].map((p,i)=>`<div><b>${p}</b><small>${i+1}${["st","nd","rd"][i]||"th"}</small></div>`).join("");
+$("#ffpts").style.gridTemplateColumns="repeat(5,minmax(0,1fr))";
+
+/* ---------- BGMI ---------- */
+$("#bgmigroups").innerHTML=Object.entries(BG).map(([g,ts])=>`<div class="bg" id="bg-${g}"><header><h5>Group ${g}</h5><small>${"AB".includes(g)?"MON 23 NOV":"TUE 24 NOV"} · ${ts.length}</small></header><ol>${ts.map(([t,l])=>`<li><div><b>${esc(t)}</b><small>${esc(l)}</small></div></li>`).join("")}</ol></div>`).join("");
+$("#bgpts").innerHTML=[["1st",10],["2nd",6],["3rd",5],["4th",4],["5th",3],["6th",2],["7–10th",1],["Kill",1]].map(([p,n])=>`<div><b>${n}</b><small>${p}</small></div>`).join("");
+
+/* ---------- TEAM INDEX ---------- */
+const IDX=[];
+VAL_R32.forEach(([a,b,d,t],i)=>{const id="R32-"+pad(i+1);
+ IDX.push({n:a,g:"valorant",s:`${id} vs ${b}`,w:`${d} · ${t}`,go:"m-"+id});
+ IDX.push({n:b,g:"valorant",s:`${id} vs ${a}`,w:`${d} · ${t}`,go:"m-"+id});});
+Object.entries(CODM_GROUPS).forEach(([g,ts])=>ts.forEach(t=>{
+ const ws=[];CODM_W.forEach((w,i)=>w.forEach(m=>{if(m&&(m[1]===t||m[2]===t))ws.push(i)}));
+ IDX.push({n:t,g:"codm",s:`Group ${g} · Waves ${ws.map(i=>pad(i+1)).join(", ")}`,w:`Mon from ${CODM_T1[ws[0]]} · Tue from ${CODM_T2[ws[0]]}`,go:"wave-"+(ws[0]+1)});}));
+FF_DAYS.forEach(D=>[...D.g].forEach((g,i)=>FF[g].forEach(t=>IDX.push({n:t,g:"freefire",s:`Group ${g} · Lobby ${i+1}`,w:`${D.d.split(" · ")[1]} · 9:00 PM`,go:"ffg-"+g}))));
+Object.entries(BG).forEach(([g,ts])=>ts.forEach(([t,l])=>IDX.push({n:t,g:"bgmi",s:`Group ${g} · Leader ${l}`,w:`${"AB".includes(g)?"Mon 23":"Tue 24"} Nov · 8:30 PM`,go:"bg-"+g})));
+const norm=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,"");
+const q=$("#q"),R=$("#results");
+q.addEventListener("input",()=>{
+ const v=norm(q.value);
+ if(!v){R.innerHTML="";return}
+ const hits=IDX.filter(x=>norm(x.n).includes(v)).slice(0,24);
+ R.innerHTML=hits.length?hits.map((x,i)=>`<button class="res" data-i="${IDX.indexOf(x)}" style="--g:${GC[x.g]}"><span class="gtag">${GN[x.g]}</span><span class="nm">${esc(x.n)}<small>${esc(x.s)}</small></span><span class="when">${esc(x.w)}</span></button>`).join(""):`<div class="empty">No team matches “${esc(q.value)}”. Try part of the name.</div>`;
+});
+R.addEventListener("click",e=>{
+ const b=e.target.closest(".res");if(!b)return;
+ const x=IDX[+b.dataset.i];show(x.g);
+ requestAnimationFrame(()=>{const el=document.getElementById(x.go);if(!el)return;
+  el.scrollIntoView({behavior:"smooth",block:"center",inline:"center"});
+  el.classList.remove("hl");void el.offsetWidth;el.classList.add("hl");});
+});
+
+/* ---------- TABS ---------- */
+const TABS=["overview","valorant","codm","freefire","bgmi"];
+function show(t,push=true){
+ if(!TABS.includes(t))t="overview";
+ TABS.forEach(k=>{$("#p-"+k).hidden=k!==t});
+ document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected",b.dataset.t===t));
+ if(push&&location.hash!=="#"+t)history.replaceState(null,"","#"+t);
+}
+$("#tabs").addEventListener("click",e=>{const b=e.target.closest(".tab");if(!b)return;show(b.dataset.t);
+ const tb=document.querySelector(".tabbar");if(tb.getBoundingClientRect().top<=1)window.scrollTo({top:tb.offsetTop,behavior:"smooth"});});
+window.addEventListener("hashchange",()=>show(location.hash.slice(1),false));
+show(location.hash.slice(1),false);
+</script>
+
+</body>
+</html>
