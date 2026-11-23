@@ -207,6 +207,7 @@ section+section{margin-top:34px}
 .ffg li{counter-increment:n;display:grid;grid-template-columns:22px 1fr;gap:4px}
 .ffg li::before{content:counter(n,decimal-leading-zero);font-family:var(--f-mono);font-size:10.5px;color:var(--faint);padding-top:2px}
 .ffg li span{overflow-wrap:anywhere}
+.ffg li .igl{display:block;font-family:var(--f-mono);font-size:10.5px;color:var(--ff);letter-spacing:.02em}
 .ffg footer{padding:7px 12px;font-family:var(--f-mono);font-size:11px;color:var(--accent);border-top:1px solid var(--line);background:rgba(255,159,28,.06)}
 .funnel{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;align-items:stretch}
 .fstep{background:var(--panel);border:1px solid var(--line);padding:14px;position:relative;min-width:0}
@@ -489,7 +490,7 @@ const pad=n=>String(n).padStart(2,"0");
 
 const CODM_GROUPS={A:["LIQUID","Nuclear","Barrel House","ThaiyirSaadham"],B:["J²DYS","Team Zero","Blitz Raiders","TF141"],C:["Team Lost","EDGE","Team Crackillusion","Kid Slayers"],D:["Offset","Darkhold","Sapne Suhane...","Bawts"],E:["Freakuency","beAtBreAkers@!","Money_follows","Gobi Ke Parathe"],F:["THE COMRADES","ABCDEFGHIJKLMNOPQRSTUVWXYZ","Free Kills","$500"],G:["Last Warning","Smoke","cod vinashak","Clutch crew","RVCE"]};
 const CODM_T1=["9:30 PM","9:50 PM","10:10 PM","10:30 PM","10:50 PM","11:10 PM","11:30 PM"];
-const CODM_T2=["12:30 PM","12:50 PM","1:10 PM","1:45 PM","2:05 PM","2:40 PM","3:00 PM"];
+const CODM_T2=["9:30 PM","9:50 PM","10:10 PM","10:30 PM","10:50 PM","11:10 PM","11:30 PM"];
 const CODM_W=[
  [["G","Clutch crew","RVCE"],["G","Last Warning","Smoke"],["A","Barrel House","ThaiyirSaadham"],["A","LIQUID","Nuclear"],["B","Blitz Raiders","TF141"],["B","J²DYS","Team Zero"],["C","EDGE","Kid Slayers"]],
  [["G","Last Warning","cod vinashak"],["C","Team Lost","Team Crackillusion"],["D","Darkhold","Bawts"],["D","Offset","Sapne Suhane..."],["E","Freakuency","Gobi Ke Parathe"],["E","beAtBreAkers@!","Money_follows"],["F","ABCDEFGHIJKLMNOPQRSTUVWXYZ","$500"]],
@@ -511,6 +512,7 @@ const FF={
  I:["ZERO MERCY (2)","Troopers","The TyreLess Bastards","ALTER-EGO","RMA Fighters","Satluj","ZeroOne","FRAGORA","Titan FF","GodxMacro","FAILURES"],
  J:["Anteiku","Riders","LOSERS","Team NaMg","Unknown knights","Code4Us","Maut Ke Saudagar","Sdc kaand","NO MERCY","Team infero","DEATH SYNDICATE"],
  K:["SILENT KILLER","X PLANETS","HUNTERS","Faaahhh Esports","4Flukes","TEAM DOOM","All eyes on us","TEAM ICONIC","Techno Blast","Apex dominion","FIREGODS"]};
+const FF_IGL={"ZERO MERCY (1)":"Dandu Sahith Varma","ZERO MERCY (2)":"Piyush Mondal"};
 const FF_DAYS=[
  {d:"Day 1 · Mon 23 Nov",g:"ABCD",top:5,note:"48 teams · top 5 per group = 20 semifinalists"},
  {d:"Day 2 · Tue 24 Nov",g:"EFGH",top:4,note:"46 teams · top 4 per group = 16 semifinalists"},
@@ -530,10 +532,10 @@ const DAYS=[
   ["freefire","9:00 PM","11:25 PM","Groups A–D","48 teams · top 5 per group advance · check-in 8:30"],
   ["codm","9:30 PM","11:50 PM","Hardpoint · Summit","Waves 01–07 · check-in 9:00 PM"]]},
  {h:"Tue",d:"24 Nov",ev:[
-  ["codm","12:30 PM","3:40 PM","Domination · Raid","Waves 01–07 · check-in 12:00 PM"],
   ["valorant","8:00 PM","11:00 PM","R32-09 to 16, then R16-01 & 02","8–9 PM: 09–12 · 9–10 PM: 13–16 · 10–11 PM: R16-01, 02"],
   ["bgmi","8:30 PM","12:00 AM","Qualifier Day 2 · Groups C & D","32 teams · top 32 overall advance"],
-  ["freefire","9:00 PM","11:25 PM","Groups E–H","46 teams · top 4 per group advance"]]},
+  ["freefire","9:00 PM","11:25 PM","Groups E–H","46 teams · top 4 per group advance"],
+  ["codm","9:30 PM","11:50 PM","Domination · Raid","Waves 01–07 · check-in 9:00 PM"]]},
  {h:"Wed",d:"25 Nov",ev:[
   ["codm","TBD","","Search & Destroy · Firing Range","Same waves and lobbies as Days 1–2"],
   ["bgmi","8:30 PM","12:00 AM","Semi-finals · Top 32","Top 16 advance to Grand Finals"],
@@ -570,7 +572,7 @@ $("#later").innerHTML=LATER.map(([g,w,t,d])=>`<div class="card ev" style="--g:${
 /* ---------- CODM ---------- */
 $("#modes").innerHTML=[
  ["Day 1 · Mon 23 Nov","Hardpoint · Summit","Check-in 9:00 PM · Waves 9:30–11:50 PM"],
- ["Day 2 · Tue 24 Nov","Domination · Raid","Check-in 12:00 PM · Waves 12:30–3:40 PM"],
+ ["Day 2 · Tue 24 Nov","Domination · Raid","Check-in 9:00 PM · Waves 9:30–11:50 PM"],
  ["Day 3 · Wed 25 Nov","Search & Destroy · Firing Range","Timings TBD"]].map(([d,m,t],i)=>`<div class="mode"><span class="num">0${i+1}</span><div class="eyebrow" style="color:var(--codm)">${d}</div><h4>${esc(m)}</h4><p class="mono" style="font-size:12px">${t}</p></div>`).join("");
 $("#codmgroups").innerHTML=Object.entries(CODM_GROUPS).map(([g,ts])=>`<div class="grp" id="cg-${g}"><h4>Group ${g}<small>${ts.length} TEAMS</small></h4><ol>${ts.map(t=>`<li>${esc(t)}</li>`).join("")}</ol></div>`).join("");
 $("#waves").innerHTML=CODM_W.map((w,i)=>`<article class="wave" id="wave-${i+1}"><header><h4>Wave ${pad(i+1)}</h4><div class="wtimes"><span><small>23 · HP</small>${CODM_T1[i]}</span><span><small>24 · DOM</small>${CODM_T2[i]}</span><span><small>25 · S&amp;D</small>TBD</span></div></header>${
@@ -578,7 +580,7 @@ $("#waves").innerHTML=CODM_W.map((w,i)=>`<article class="wave" id="wave-${i+1}">
 
 /* ---------- FREE FIRE ---------- */
 $("#ffdays").innerHTML=`<div class="sh"><span class="eyebrow">Group allocations</span><h3>Lobbies by night</h3></div>`+FF_DAYS.map(D=>`<div class="ffday"><div class="ffday-h"><h4>${D.d}</h4><span>9:00–11:25 PM · ${D.note}</span></div><div class="ffgrid">${
- [...D.g].map((g,i)=>`<div class="ffg" id="ffg-${g}"><header><h5>Group ${g}</h5><small>LOBBY ${i+1} · ${FF[g].length} TEAMS</small></header><ol>${FF[g].map(t=>`<li><span>${esc(t)}</span></li>`).join("")}</ol><footer>Top ${D.top} advance → LAN semifinals</footer></div>`).join("")}</div></div>`).join("");
+ [...D.g].map((g,i)=>`<div class="ffg" id="ffg-${g}"><header><h5>Group ${g}</h5><small>LOBBY ${i+1} · ${FF[g].length} TEAMS</small></header><ol>${FF[g].map(t=>`<li><span>${esc(t)}${FF_IGL[t]?`<small class="igl">IGL · ${esc(FF_IGL[t])}</small>`:""}</span></li>`).join("")}</ol><footer>Top ${D.top} advance → LAN semifinals</footer></div>`).join("")}</div></div>`).join("");
 $("#ffpts").innerHTML=[12,9,8,7,6,5,4,3,2,1].map((p,i)=>`<div><b>${p}</b><small>${i+1}${["st","nd","rd"][i]||"th"}</small></div>`).join("");
 $("#ffpts").style.gridTemplateColumns="repeat(5,minmax(0,1fr))";
 
@@ -653,7 +655,7 @@ VAL_R32.forEach(([a,b,d,t],i)=>{const id="R32-"+pad(i+1);
 Object.entries(CODM_GROUPS).forEach(([g,ts])=>ts.forEach(t=>{
  const ws=[];CODM_W.forEach((w,i)=>w.forEach(m=>{if(m&&(m[1]===t||m[2]===t))ws.push(i)}));
  IDX.push({n:t,g:"codm",s:`Group ${g} · Waves ${ws.map(i=>pad(i+1)).join(", ")}`,w:`Mon from ${CODM_T1[ws[0]]} · Tue from ${CODM_T2[ws[0]]}`,go:"wave-"+(ws[0]+1)});}));
-FF_DAYS.forEach(D=>[...D.g].forEach((g,i)=>FF[g].forEach(t=>IDX.push({n:t,g:"freefire",s:`Group ${g} · Lobby ${i+1}`,w:`${D.d.split(" · ")[1]} · 9:00 PM`,go:"ffg-"+g}))));
+FF_DAYS.forEach(D=>[...D.g].forEach((g,i)=>FF[g].forEach(t=>IDX.push({n:t,g:"freefire",s:`Group ${g} · Lobby ${i+1}${FF_IGL[t]?" · IGL "+FF_IGL[t]:""}`,w:`${D.d.split(" · ")[1]} · 9:00 PM`,go:"ffg-"+g}))));
 Object.entries(BG).forEach(([g,ts])=>ts.forEach(([t,l])=>IDX.push({n:t,g:"bgmi",s:`Group ${g} · Leader ${l}`,w:`${"AB".includes(g)?"Mon 23":"Tue 24"} Nov · 8:30 PM`,go:"bg-"+g})));
 const norm=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,"");
 const q=$("#q"),R=$("#results");

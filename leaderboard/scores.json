@@ -197,7 +197,7 @@
      {"name": "Kotha", "booyah": 0, "place": 0, "kills": 0},
      {"name": "Four star", "booyah": 0, "place": 0, "kills": 0},
      {"name": "Team op", "booyah": 0, "place": 0, "kills": 0},
-     {"name": "ZERO MERCY (1)", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "ZERO MERCY (1)", "igl": "Dandu Sahith Varma", "booyah": 0, "place": 0, "kills": 0},
      {"name": "Us gang", "booyah": 0, "place": 0, "kills": 0},
      {"name": "Chicken Dinner", "booyah": 0, "place": 0, "kills": 0},
      {"name": "CPians", "booyah": 0, "place": 0, "kills": 0},
@@ -245,7 +245,7 @@
     "day": "Wed 25 Nov",
     "top": 4,
     "teams": [
-     {"name": "ZERO MERCY (2)", "booyah": 0, "place": 0, "kills": 0},
+     {"name": "ZERO MERCY (2)", "igl": "Piyush Mondal", "booyah": 0, "place": 0, "kills": 0},
      {"name": "Troopers", "booyah": 0, "place": 0, "kills": 0},
      {"name": "The TyreLess Bastards", "booyah": 0, "place": 0, "kills": 0},
      {"name": "ALTER-EGO", "booyah": 0, "place": 0, "kills": 0},

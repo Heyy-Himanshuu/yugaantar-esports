@@ -218,7 +218,7 @@ function freefire(f){
    (anyStarted?"":notice("No results yet. Groups A–D play <b>Mon 23 Nov, 9:00 PM</b>."))+
    `<div class="filters" role="group" aria-label="Group">${filt}</div>
    <div class="board"><div class="bhead"><h3>Group ${UI.ff}</h3><small>${esc(g.day).toUpperCase()} · TOP ${g.top} TO LAN SEMIS</small></div><table><thead><tr><th class="l">#</th><th class="l">Team</th><th>Booyahs</th><th>Place pts</th><th>Kills</th><th>Total</th></tr></thead><tbody>${
-    rows.map((t,i)=>`<tr class="${started&&i<g.top?"q":""} ${started&&i===g.top-1?"cut":""}"><td class="rk">${started?pad(i+1):"–"}</td><td class="team l">${esc(t.name)}</td><td>${t.booyah}</td><td>${t.place}</td><td>${t.kills}</td><td class="tot">${t.total}</td></tr>`).join("")}</tbody></table></div>
+    rows.map((t,i)=>`<tr class="${started&&i<g.top?"q":""} ${started&&i===g.top-1?"cut":""}"><td class="rk">${started?pad(i+1):"–"}</td><td class="team l">${esc(t.name)}${t.igl?`<small>IGL · ${esc(t.igl)}</small>`:""}</td><td>${t.booyah}</td><td>${t.place}</td><td>${t.kills}</td><td class="tot">${t.total}</td></tr>`).join("")}</tbody></table></div>
    <div class="legend"><span><i class="bar"></i>Qualifies for LAN semifinals</span><span><i class="sw"></i>Cut line (top ${g.top})</span></div>`;
 }
 
